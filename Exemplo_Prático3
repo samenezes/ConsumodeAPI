@@ -1,0 +1,19 @@
+Vamos atualizar o preço de um produto existente:
+Requisição:
+PUT https://api.exemplo.com/produtos/123
+Corpo (Body):
+{
+  "preco": 359.90
+}
+Resposta:
+{
+  					"mensagem": "Produto atualizado com sucesso",
+  					"produto": {
+    						"id": 123,
+    						"nome": "Cadeira Gamer",
+    						"preco": 359.90,
+    						"estoque": 15
+  							}
+}
+Explicação:
+A requisição PUT atualiza o preço do produto com o ID 123. O servidor confirma a alteração e retorna os novos dados do produto.
