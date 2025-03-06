@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+void main() => runApp(MyApp());
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+class _MyAppState extends State<MyApp> {
+  List usuarios = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchUsuarios();
+  }
+  fetchUsuarios() async {
+    final response = await http.get('https://jsonplaceholder.typicode.com/users');
+    if (response.statusCode == 200) {
+      setState(() {
+        usuarios = json.decode(response.body);
+      });
+    } else {
+      throw Exception('Falha ao carregar usuários');
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Usuários')),
+        body: ListView.builder(
+          itemCount: usuarios.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(usuarios[index]['name']),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+Explicação:
+O método http.get() faz a requisição e retorna a lista de usuários.
+A resposta é decodificada em JSON e exibida em uma lista.
+Exemplo de Consumo de API com http no Flutter:
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+void main() => runApp(MyApp());
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ListaUsuarios(),
+    );
+  }
+}
+class ListaUsuarios extends StatefulWidget {
+  @override
+  _ListaUsuariosState createState() => _ListaUsuariosState();
+}
+class _ListaUsuariosState extends State<ListaUsuarios> {
+  List usuarios = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchUsuarios();
+  }
+  fetchUsuarios() async {
+    final response = await http.get(Uri.parse('https://api.exemplo.com/usuarios'));
+    if (response.statusCode == 200) {
+      setState(() {
+        usuarios = json.decode(response.body);
+      });
+    } else {
+      throw Exception('Erro ao carregar usuários');
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: usuarios.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(usuarios[index]['nome']),
+        );
+      },
+    );
+  }
+}
