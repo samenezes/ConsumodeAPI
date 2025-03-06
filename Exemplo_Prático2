@@ -1,0 +1,20 @@
+Vamos criar um novo produto na API de produtos:
+Requisição:
+POST https://api.exemplo.com/produtos
+Corpo (Body):
+{  "nome": "Mesa de Escritório",
+    "preco": 299.90,
+ 			    "estoque": 20
+}
+Resposta:
+{
+  			"mensagem": "Produto criado com sucesso",
+  			"produto": {
+    			"id": 124,
+    			"nome": "Mesa de Escritório",
+    			"preco": 299.90,
+    			"estoque": 20
+  				}
+}
+Explicação:
+A requisição POST envia os dados de um novo produto ao servidor. O servidor processa os dados e retorna uma confirmação de sucesso junto com as informações do produto criado.
