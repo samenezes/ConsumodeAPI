@@ -1,0 +1,50 @@
+kotlin
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.Call
+data class Usuario(val id: Int, val name: String)
+interface ApiService {
+    @GET("users")
+    fun getUsuarios(): Call<List<Usuario>>
+}
+val retrofit = Retrofit.Builder()
+    .baseUrl("https://jsonplaceholder.typicode.com/")
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
+val service = retrofit.create(ApiService::class.java)
+val call = service.getUsuarios()
+call.enqueue(object : retrofit2.Callback<List<Usuario>> {
+    override fun onResponse(call: Call<List<Usuario>>, response: retrofit2.Response<List<Usuario>>) {
+        response.body()?.forEach {
+            println(it.name)
+        }
+    }
+    override fun onFailure(call: Call<List<Usuario>>, t: Throwable) {
+        println("Erro: ${t.message}")
+    }
+})
+Explicação:
+Retrofit: Uma biblioteca que facilita a comunicação HTTP e a manipulação de respostas JSON.
+@GET("users"): Define um endpoint para a requisição GET.
+enqueue(): Executa a requisição de forma assíncrona e processa a resposta.
+Exemplo de Requisição POST com Retrofit:
+kotlin
+data class Post(val userId: Int, val title: String, val body: String)
+interface ApiService {
+    @POST("posts")
+    fun criarPost(@Body post: Post): Call<Post>
+}
+val novoPost = Post(1, "Novo Post", "Conteúdo do post")
+val call = service.criarPost(novoPost)
+call.enqueue(object : retrofit2.Callback<Post> {
+    override fun onResponse(call: Call<Post>, response: retrofit2.Response<Post>) {
+        println("Post criado: ${response.body()?.title}")
+    }
+    override fun onFailure(call: Call<Post>, t: Throwable) {
+        println("Erro: ${t.message}")
+    }
+})
+Explicação:
+@POST("posts"): Define uma requisição POST para criar um novo recurso.
+@Body post: Envia o objeto Post no corpo da requisição.
