@@ -1,0 +1,57 @@
+import Foundation
+let url = URL(string: "https://jsonplaceholder.typicode.com/users")!
+let task = URLSession.shared.dataTask(with: url) { data, response, error in
+    if let error = error {
+        print("Erro: \(error)")
+        return
+    }
+    guard let data = data else {
+        print("Nenhum dado recebido.")
+        return
+    }
+     do {
+        let usuarios = try JSONDecoder().decode([Usuario].self, from: data)
+        print(usuarios)
+    } catch let jsonError {
+        print("Erro ao decodificar JSON: \(jsonError)")
+    }
+}
+task.resume()
+Explicação:
+URLSession.shared.dataTask(): Inicia uma requisição assíncrona para o servidor.
+O closure ({}) recebe os dados, a resposta e o erro da requisição.
+O JSONDecoder converte os dados retornados de JSON para uma lista de objetos em Swift.
+Exemplo de Requisição POST em Swift:
+swift
+import Foundation
+let url = URL(string: "https://jsonplaceholder.typicode.com/posts")!
+var request = URLRequest(url: url)
+request.httpMethod = "POST"
+request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+let post = [
+    "title": "Novo Post",
+    "body": "Conteúdo do post",
+    "userId": 1
+]
+let jsonData = try! JSONSerialization.data(withJSONObject: post, options: [])
+let task = URLSession.shared.uploadTask(with: request, from: jsonData) { data, response, error in
+    if let error = error {
+        print("Erro: \(error)")
+        return
+    }
+    guard let data = data else {
+        print("Nenhum dado recebido.")
+        return
+    }
+    do {
+        let resposta = try JSONDecoder().decode(Post.self, from: data)
+        print("Post criado: \(resposta)")
+    } catch let jsonError {
+        print("Erro ao decodificar JSON: \(jsonError)")
+    }}
+
+task.resume()
+Explicação:
+URLRequest: Define a URL e o método HTTP POST.
+JSONSerialization: Converte o objeto Swift em JSON para ser enviado na requisição.
+URLSession.shared.uploadTask(): Envia os dados JSON ao servidor e processa a resposta.
