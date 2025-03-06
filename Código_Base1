@@ -1,0 +1,14 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+let produtos = [];
+app.post('/produtos', (req, res) => {
+  const produto = req.body;
+  produtos.push(produto);
+  res.status(201).send('Produto adicionado com sucesso');
+});
+app.get('/produtos', (req, res) => {
+  res.status(200).json(produtos);
+});
+app.listen(3000, () => {
+  console.log('API rodando na porta 3000'); });
