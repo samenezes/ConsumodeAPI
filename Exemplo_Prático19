@@ -1,0 +1,51 @@
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList } from 'react-native';
+import axios from 'axios';
+const App = () => {
+  const [usuarios, setUsuarios] = useState([]);
+  useEffect(() => {
+    axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(response => setUsuarios(response.data))
+      .catch(error => console.error('Erro:', error));
+  }, []);
+  return (
+    <View>
+      <Text>Lista de Usuários</Text>
+      <FlatList
+        data={usuarios}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => <Text>{item.name}</Text>}
+      />
+    </View>
+  );
+};
+export default App;
+Explicação:
+A requisição GET busca os dados e os exibe em uma lista usando o componente FlatList.
+Exemplo de Consumo de API com Axios no React Native:
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList } from 'react-native';
+import axios from 'axios';
+export default function ListaUsuarios() {
+  const [usuarios, setUsuarios] = useState([]);
+  useEffect(() => {
+    axios.get('https://api.exemplo.com/usuarios')
+      .then(response => {
+        setUsuarios(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar usuários:', error);
+      });
+  }, []);
+  return (
+    <View>
+      <FlatList
+        data={usuarios}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
+          <Text>{item.nome}</Text>
+        )}
+      />
+    </View>
+  );
+}
