@@ -1,0 +1,10 @@
+Vamos utilizar a Fetch API para realizar uma requisição GET e obter a lista de usuários de uma API pública.
+fetch('https://jsonplaceholder.typicode.com/users')
+  		.then(response => response.json())
+  		.then(data => console.log(data))
+  		.catch(error => console.error('Erro:', error));
+
+Explicação:
+O método fetch() faz a requisição HTTP para o servidor.
+O .then(response => response.json()) transforma a resposta em um objeto JavaScript, no caso, um array de usuários.
+O .catch() captura possíveis erros na requisição.
