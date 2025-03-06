@@ -1,0 +1,50 @@
+
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import axios from 'axios';
+
+const App = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Função para consumir a API com Axios
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+      setData(response.data);
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Chama a função ao carregar o componente
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  return (
+    <View>
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.name}</Text>
+            <Text>{item.email}</Text>
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+export default App;
+Explicando o código com Axios:
+Axios.get(): Usamos o axios.get() para fazer a requisição GET para a API. O método retorna uma promise que, quando resolvida, fornece os dados da API.
+response.data: O Axios retorna os dados no campo data, que contém a resposta da API em formato JSON.
+Handling de erros: O Axios facilita o tratamento de erros, e o try-catch garante que qualquer problema na requisição seja tratado corretamente.
