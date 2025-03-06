@@ -1,0 +1,22 @@
+typescript
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+@Component({
+  selector: 'app-usuarios',
+  template: `
+    <h1>Lista de Usuários</h1>
+    <ul>
+      <li *ngFor="let usuario of usuarios">{{ usuario.name }}</li>
+    </ul>
+  `})
+export class UsuariosComponent implements OnInit {
+  usuarios: any[] = [];
+  constructor(private http: HttpClient) {}
+  ngOnInit(): void {
+    this.http.get('https://jsonplaceholder.typicode.com/users')
+      .subscribe((data: any) => this.usuarios = data);
+  }
+}
+Explicação:
+O serviço HttpClient faz a requisição e, ao receber os dados, os armazena no array usuarios.
+A lista de usuários é exibida no template usando *ngFor.
