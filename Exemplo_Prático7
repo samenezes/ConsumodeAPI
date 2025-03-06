@@ -1,0 +1,18 @@
+Vamos utilizar o Axios para realizar uma requisição GET e buscar a lista de usuários.
+axios.get('https://jsonplaceholder.typicode.com/users')
+  .then(response => console.log(response.data))
+  .catch(error => console.error('Erro:', error));
+Explicação:
+O método axios.get() faz a requisição HTTP e retorna os dados diretamente no formato JSON.
+A resposta está disponível no objeto response.data.
+Enviando Dados com POST:
+Para enviar dados ao servidor com Axios, o processo é igualmente simples.
+axios.post('https://jsonplaceholder.typicode.com/posts', {
+  title: 'Novo Post',
+  body: 'Este é um post de exemplo',
+  userId: 1
+}).then(response => console.log('Post criado:', response.data))
+  .catch(error => console.error('Erro:', error));
+Explicação:
+axios.post() é utilizado para enviar dados ao servidor. O corpo da requisição é passado como segundo argumento.
+O Axios converte automaticamente o objeto em JSON e o envia com os headers apropriados.
