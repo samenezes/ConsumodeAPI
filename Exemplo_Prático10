@@ -1,0 +1,15 @@
+export default {
+  data() {
+    return {
+      usuarios: []
+    };  },
+  created() {
+    axios.get('https://jsonplaceholder.typicode.com/users')
+      .then(response => {
+        this.usuarios = response.data;
+      })
+      .catch(error => console.error('Erro:', error));
+  }
+};
+Explicação:
+A requisição é feita no hook created(), e os dados são atribuídos à variável usuarios do estado do componente.
