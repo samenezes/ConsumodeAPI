@@ -1,0 +1,9 @@
+Vamos deletar o produto com o ID 123:
+Requisição:
+DELETE https://api.exemplo.com/produtos/123
+Resposta:
+{
+  "mensagem": "Produto removido com sucesso"
+}
+Explicação:
+A requisição DELETE remove o produto com o ID 123 do servidor. O servidor confirma que o produto foi removido com sucesso.
