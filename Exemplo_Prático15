@@ -1,0 +1,88 @@
+dart
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text("Consumo de API em Flutter")),
+        body: UsersList(),
+      ),
+    );
+  }
+}
+
+class UsersList extends StatefulWidget {
+  @override
+  _UsersListState createState() => _UsersListState();
+}
+
+class _UsersListState extends State<UsersList> {
+  List<dynamic> users = [];
+
+  // Função para consumir a API e buscar os dados
+  Future<void> fetchUsers() async {
+    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        users = json.decode(response.body); // Decodifica o JSON para lista
+      });
+    } else {
+      throw Exception('Falha ao carregar usuários');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUsers(); // Chama a função para buscar os dados ao inicializar o app
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: users.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(users[index]['name']),
+          subtitle: Text(users[index]['email']),
+        );
+      },
+    );
+  }
+}
+Explicando o código:
+Importação das bibliotecas: A biblioteca http é importada para fazer a requisição HTTP, e dart:convert é utilizada para converter a resposta JSON em um formato que o Flutter entenda.
+Função fetchUsers: A função fetchUsers() faz uma requisição GET para a URL da API. Quando a resposta é recebida, ela é convertida de JSON para um formato utilizável por Flutter (neste caso, uma lista de usuários) e a interface é atualizada com o método setState().
+ListView: Os dados dos usuários são exibidos em uma lista. O ListView.builder é utilizado para criar a lista dinamicamente a partir dos dados recebidos.
+
+Enviando dados com o método POST
+Além de realizar requisições GET para buscar dados, você pode enviar dados para a API usando o método POST. A seguir, mostramos como enviar dados para a API usando POST.
+dart
+Future<void> createUser() async {
+  final response = await http.post(
+    Uri.parse('https://jsonplaceholder.typicode.com/users'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'name': 'John Doe',
+      'email': 'johndoe@example.com',
+    }),
+  );
+
+  if (response.statusCode == 201) {
+    // Se a requisição for bem-sucedida, exibe a resposta
+    print('Usuário criado com sucesso!');
+  } else {
+    throw Exception('Falha ao criar usuário');
+  }
+}
