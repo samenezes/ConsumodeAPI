@@ -1,0 +1,55 @@
+
+import React, { useState } from 'react';
+import { View, TextInput, Text, Button, StyleSheet } from 'react-native';
+
+const App = () => {
+  // Declarando o estado para armazenar o nome temporário
+  const [name, setName] = useState('');
+
+  // Função para lidar com a alteração do campo de entrada
+  const handleChange = (text) => {
+    setName(text); // Atualiza o estado com o novo valor
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Digite seu nome"
+        value={name}
+        onChangeText={handleChange} // Atualiza o estado sempre que o texto mudar
+      />
+      <Text style={styles.text}>Olá, {name ? name : 'usuário'}!</Text>
+      <Button title="Limpar" onPress={() => setName('')} /> {/* Limpa o campo */}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ddd',
+    borderWidth: 1,
+    width: '100%',
+    marginBottom: 20,
+    paddingLeft: 8,
+  },
+  text: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+});
+
+export default App;
+Explicação do código:
+useState(''): Declaramos o estado name, que armazenará o valor do nome digitado no campo de entrada. O useState('') recebe um valor inicial (uma string vazia) e retorna um array com dois elementos: o valor atual do estado e a função para atualizar o estado (setName).
+TextInput: O componente TextInput recebe o valor do estado name e atualiza esse valor sempre que o usuário digita algo.
+onChangeText: Essa propriedade do TextInput chama a função handleChange sempre que o texto no campo de entrada é alterado. A função handleChange atualiza o estado com o novo valor.
+Text: A tag Text exibe uma saudação para o usuário, utilizando o valor armazenado em name.
+Button: O botão "Limpar" chama setName(''), que redefine o estado para uma string vazia, limpando o campo de entrada.
