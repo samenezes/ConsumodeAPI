@@ -1,11 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const App = () => {
   const [storedValue, setStoredValue] = useState(null);
-
   // Função para armazenar dados
   const storeData = async () => {
     try {
@@ -15,7 +12,6 @@ const App = () => {
       console.error('Erro ao armazenar os dados', e);
     }
   };
-
   // Função para recuperar dados
   const getData = async () => {
     try {
@@ -28,12 +24,10 @@ const App = () => {
       console.error('Erro ao recuperar os dados', e);
     }
   };
-
   useEffect(() => {
     // Recupera dados quando o aplicativo for iniciado
     getData();
   }, []);
-
   return (
     <View style={{ padding: 20 }}>
       <Text>{storedValue ? `Valor armazenado: ${storedValue}` : 'Nenhum valor armazenado'}</Text>
@@ -41,8 +35,8 @@ const App = () => {
     </View>
   );
 };
-
 export default App;
+
 Explicação do código:
 AsyncStorage.setItem(): Esta função é usada para armazenar dados. Ela recebe dois parâmetros: a chave (@storage_key) e o valor (dados que você deseja armazenar). O valor é armazenado como uma string.
 AsyncStorage.getItem(): Essa função é usada para recuperar os dados armazenados. Ela recebe a chave como parâmetro e retorna o valor armazenado.
