@@ -1,0 +1,12 @@
+Exemplo de JSON:
+{
+  "produto": {
+    "id": 123,
+    "nome": "Cadeira Gamer",
+    "preco": 399.90,
+    "estoque": 15
+  }
+}
+
+Chaves: "id", "nome", "preco", "estoque".
+Valores: 123, "Cadeira Gamer", 399.90, 15.
