@@ -1,0 +1,10 @@
+Exemplo de XML:
+<produto>
+  <id>123</id>
+  <nome>Cadeira Gamer</nome>
+  <preco>399.90</preco>
+  <estoque>15</estoque>
+</produto>
+
+Elementos: <id>, <nome>, <preco>, <estoque>.
+Valores: 123, "Cadeira Gamer", 399.90, 15.
